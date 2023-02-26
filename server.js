@@ -25,6 +25,9 @@ app.use(express.json());
 /* Allowing the server to accept requests from other domains. */
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send(db.users);
+});
 /* Calling the handleSignin function from the signin.js file. */
 app.post("/signin", (req, res) => {
   signin.handleSignin(req, res, db, bcrypt);
