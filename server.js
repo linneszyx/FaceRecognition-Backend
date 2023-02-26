@@ -18,7 +18,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.send("it is working");
+});
 app.post("/signin", (req, res) => {
   db.select("email", "hash")
     .from("login")
