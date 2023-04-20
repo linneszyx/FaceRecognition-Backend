@@ -1,0 +1,27 @@
+version: "2.17.2"
+services:
+  #Backend API
+  facerecognition:
+    container_name: backend
+    build: ./
+    command: npm start
+    working_dir: /usr/src/facerecognition
+    environment:
+     POSTGRES_URI: psql postgres://sally:secret@postgres:5432/facerecognition-docker
+    links:
+      - postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/facerecognition
+  #Postgres
+  postgres:
+    environment:
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: facerecognition-docker
+      POSTGRES_HOST: postgres
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    build: ./postgres
+    ports:
+      - "5432:5432"
